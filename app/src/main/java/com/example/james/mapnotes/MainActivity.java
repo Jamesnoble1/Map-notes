@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //changes current activity to viewing the map
         if(v == viewMap)
         {
-            //do something
+            Intent intent = new Intent((getApplicationContext()), MapDisplay.class);
+            startActivity(intent);
         }
     }
 }

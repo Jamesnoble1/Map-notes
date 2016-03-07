@@ -50,7 +50,7 @@ public class MapDisplay extends FragmentActivity implements OnMapReadyCallback {
         mMap.setInfoWindowAdapter(customInfoWindow);
 
         LatLng test = new LatLng(56.4640, -2.97);
-        mMap.addMarker(new MarkerOptions().position(test).title("This place is the bestest").snippet("Does this work like I expect it to? Whats the limit to this?"));
+        mMap.addMarker(new MarkerOptions().position(test).title("This place is the bestest. \n TESTINGTITLE ").snippet("Does this work like I expect it to? \n Whats the limit to this?"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(test));
 
 

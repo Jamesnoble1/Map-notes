@@ -16,4 +16,34 @@
         android:id="@+id/mainMenuButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SMS"
+        android:id="@+id/smsSwitch"
+        android:checked="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download over WIFI only"
+        android:id="@+id/wifiOnlyButton"
+        android:layout_marginTop="41dp"
+        android:checked="false"
+        android:layout_below="@+id/smsSwitch"
+        android:layout_centerHorizontal="true"
+        android:elegantTextHeight="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Local Data"
+        android:id="@+id/clearCache"
+        android:layout_marginTop="43dp"
+        android:layout_below="@+id/wifiOnlyButton"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

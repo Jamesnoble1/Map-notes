@@ -1,11 +1,14 @@
 package com.example.james.mapnotes;
 
+import android.app.DialogFragment;
 import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -14,11 +17,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MapDisplay extends FragmentActivity implements OnMapReadyCallback {
-    private InfoWindow customInfoWindow;
+public class MapDisplay extends FragmentActivity
+        implements OnMapReadyCallback, View.OnClickListener, TimePickerFragment.TimeChoiceFragmentListener, DatePickerFragment.DateChoiceFragmentListener  {
+        private InfoWindow customInfoWindow;
     private GoogleMap mMap;
-    GoogleApiClient mGoogleApiClient;
-    LocationManager mLocationManager;
+    Button newMarker;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +33,39 @@ public class MapDisplay extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        newMarker = (Button)findViewById(R.id.mapButton);
 
+        //sets onclick listener for buttons
+        newMarker.setOnClickListener(this);
 
         customInfoWindow = new InfoWindow(this);
 
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        if(v == newMarker)
+        {
+            DialogFragment newFragment = new TimePickerFragment();
+            newFragment.show(getFragmentManager(), "choosedate");
+        }
+    }
 
+    //These get results from the fragments that take date/time entry
+    @Override
+    public void onFinishedTimeEntry(String selectedTime)
+    {
+        Log.i("time is:", selectedTime);
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "choosedate");
+    }
+
+    @Override
+    public void onFinishedDateEntry(String selectedDate)
+    {
+        Log.i("date is:", selectedDate);
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -51,7 +82,7 @@ public class MapDisplay extends FragmentActivity implements OnMapReadyCallback {
 
         LatLng test = new LatLng(56.4640, -2.97);
         mMap.addMarker(new MarkerOptions().position(test).title("This place is the bestest. \n TESTINGTITLE ").snippet("Does this work like I expect it to? \n Whats the limit to this?"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(test));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(test, 16.0f));
 
 
     }

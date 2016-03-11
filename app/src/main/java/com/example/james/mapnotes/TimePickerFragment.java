@@ -51,6 +51,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         TimeChoiceFragmentListener activity = (TimeChoiceFragmentListener)getActivity();
         activity.onFinishedTimeEntry(chosenTime);
 
+
         //dismiss fragment
         this.dismiss();
     }

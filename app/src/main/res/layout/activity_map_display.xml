@@ -16,8 +16,10 @@
         android:id="@+id/mapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/map_button"
+        android:alpha="0.85"
         android:layout_alignParentBottom="true"
-        android:text="@string/map_button"/>
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

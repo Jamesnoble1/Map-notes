@@ -3,6 +3,7 @@ package com.example.james.mapnotes;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.LayoutInflater;
 
 /**
  * Created by James on 06/03/2016.
@@ -35,6 +36,7 @@ public class MarkerDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+
         //create table if it doesn't exist
         db.execSQL(CREATE_MARKER_TABLE);
     }

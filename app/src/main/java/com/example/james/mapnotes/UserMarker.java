@@ -11,18 +11,17 @@ public class UserMarker {
     public String Snippet; //MArker Snippet
     public String Date; //Event date if applicable
     public String Time; //Event time if applicable
-    public int markerNumber; //Marker identifier
     public int Icon; //user selected icon
-    public float Latitude; //Marker lat
-    public float Longitude; //marker long
+    public double Latitude; //Marker lat
+    public double Longitude; //marker long
 
-    public UserMarker(String title, String snippet, String date, String time, int mNumber, int icon, float lat, float longitude )
+    public UserMarker( double lat, double longitude ,String title, String snippet, int icon, String date, String time )
     {
         Title = title;
         Snippet = snippet;
         Date = date;
         Time = time;
-        markerNumber = mNumber;
+
         Icon = icon;
         Latitude = lat;
         Longitude = longitude;

@@ -1,6 +1,7 @@
 package com.example.james.mapnotes;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,8 @@ public class Settings_Screen extends Activity implements View.OnClickListener, C
         if(v == clearDatabase)
         {
             //clear all entries in local db
+            BackgroundClearDB clearDB = new BackgroundClearDB(getApplicationContext());
+            clearDB.execute();
         }
     }
 

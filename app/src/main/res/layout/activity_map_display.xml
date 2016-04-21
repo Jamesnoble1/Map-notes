@@ -12,14 +12,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.james.mapnotes.MapDisplay"
     />
+
     <Button
-        android:id="@+id/mapButton"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/map_button"
-        android:alpha="0.85"
+        android:text="Display Type"
+        android:id="@+id/displayTypebtn"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

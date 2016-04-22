@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by James on 06/03/2016.
  * Database helper to handle communication with local database
+ * Based on helper class example provided by Andrei Boiko for CE0942A
  */
 public class MarkerDatabaseHelper extends SQLiteOpenHelper {
     //Class constants
@@ -52,7 +53,6 @@ public class MarkerDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
     //adds passed in marker to DB
     public boolean addMarker(UserMarker marker)
     {
@@ -72,7 +72,6 @@ public class MarkerDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return result >= 0;
-
     }
 
     //gets all markers stored in local DB
@@ -114,6 +113,7 @@ public class MarkerDatabaseHelper extends SQLiteOpenHelper {
         //query db for all markers
         Cursor results = db.query(MARKERS_TABLE_NAME, COLUMN_NAMES, WHERE_EVENTS, null, null, null, null, null);
 
+        //loops through all the results in the cursor and adds to markerEntries
         for(int i = 0; i < results.getCount(); i++)
         {
             results.moveToPosition(i);

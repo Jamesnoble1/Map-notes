@@ -12,7 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Main Menu"
+        android:text="Save and return to menu"
         android:id="@+id/mainMenuButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
@@ -42,8 +42,9 @@
         android:layout_height="wrap_content"
         android:text="Clear Local Data"
         android:id="@+id/clearCache"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/downloadAllSwitch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
 
     <Switch
         android:layout_width="wrap_content"

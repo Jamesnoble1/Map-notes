@@ -1,26 +1,15 @@
 package com.example.james.mapnotes;
 
-import android.Manifest;
+
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Criteria;
+import android.content.SharedPreferences;
 import android.location.Location;
-import com.google.android.gms.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.security.Permission;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 
 /**
  * Created by James on 07/03/2016.
@@ -28,38 +17,74 @@ import java.util.Calendar;
  */
 public class MapData implements LocationListener {
     MarkerDatabaseHelper dbHelper;
-    LocationManager mLocationManager;
-    GoogleApiClient mApiClient;
+    MapDisplay parentActivity;
     Context context;
 
+    //used to hold the markers from the database
     ArrayList<UserMarker> currentMarkerInfo;
+
+    double maxDistance = 0.5;
+    double freshTimer = 60000;
+
     //gets and stores the date given by the user through the main activity
     private  String mDate, mTime, mTitle, mBody;
     private LatLng mLocation;
+    Location currentLocation;
+
+    long lastUpdated = 0;
 
 
 
-
-    MapData(Context c,  GoogleApiClient apiClient)
+    MapData(Context c,  MapDisplay activity)
     {
         context = c;
         dbHelper = new MarkerDatabaseHelper(c);
+        parentActivity = activity;
 
-        mApiClient = apiClient;
+        //load values from shard preferenaces
+        SharedPreferences perfs = context.getSharedPreferences("Databse Data", 0);
+        lastUpdated = perfs.getLong("LAST_TIME", 0);
 
-
+        //set defaults
         mTime = "NULL";
         mDate = "NULL";
 
     }
 
+
+    //listener for when user location changes. When user has moved far enough new set of markers are downloaded from database
     @Override
     public void onLocationChanged(Location location)
     {
-        Log.e("Location", location.toString());
+            if (Math.abs(currentLocation.getLatitude() - location.getLatitude()) > maxDistance || Math.abs(currentLocation.getLongitude() - location.getLongitude()) > maxDistance) {
+                currentLocation = location;
+                //download new local markers if moved enough
+                if (!parentActivity.downloadAll && !parentActivity.wifiOnly && parentActivity.isValidConnection())
+                    parentActivity.remoteHelper.getLocalMarkers(parentActivity, location.getLatitude(), location.getLongitude());
+
+            }
     }
 
+    //finds if the marker at the position passed in is an event or not. Returns the UserMarker for that marker
+    public UserMarker findEvent(LatLng position)
+    {
+        if(currentMarkerInfo != null)
+        {
+            for (UserMarker u: currentMarkerInfo)
+            {
+                if(u.Longitude == position.longitude && u.Latitude == position.latitude && !u.Date.equals("NULL"))
+                {
 
+                    return u;
+                }
+            }
+
+        }
+
+
+
+        return null;
+    }
     //gets and stores the date given by the user through the main activity
     public void setDate(String date)
     {
@@ -85,6 +110,18 @@ public class MapData implements LocationListener {
         mLocation = location;
     }
 
+    //sets current time
+    public void setCurrentTime()
+    {
+        lastUpdated = System.currentTimeMillis();
+
+        SharedPreferences perfs = context.getSharedPreferences("Databse Data", 0);
+
+       SharedPreferences.Editor editor = perfs.edit();
+        editor.putLong("LAST_TIME", lastUpdated);
+
+        editor.apply();
+    }
 
     //getters for data given by user
     public String getDate()
@@ -143,27 +180,19 @@ public class MapData implements LocationListener {
     {
         currentMarkerInfo = dbHelper.getAllMessages();
     }
-    //loads data from remote DB
-    public void loadRemoteData()
-    {
 
-    }
 
     //get marker data
     public ArrayList<UserMarker> getMarkers()
     {
         return currentMarkerInfo;
     }
-    //gets user location
-    public Location getUserLocation()
-    {
-        int permissionsCheckCoarse = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
-        int permissionsCheckFine = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-      // if(permissionsCheckCoarse != PackageManager.PERMISSION_DENIED || permissionsCheckFine != PackageManager.PERMISSION_DENIED )
-       {
-           return LocationServices.FusedLocationApi.getLastLocation(mApiClient);
-       }
 
-    // return null;
+
+    //if data is more than a minute old download new data
+    public Boolean isDataFresh()
+    {
+        return (System.currentTimeMillis() - lastUpdated < freshTimer);
     }
 }
+

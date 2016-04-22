@@ -20,6 +20,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     int currentMonth;
     int currentDay;
     final Calendar c = Calendar.getInstance();
+
     //callback interface to return result to activity
     public interface DateChoiceFragmentListener
     {
@@ -50,6 +51,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         if(c.before(userSet))
         {
             //construct a string out of date chosen
+            //month + 1 as result is from 0 - 11
             chosenDate = year + "/" + (month + 1) + "/" + day;
         }
         else

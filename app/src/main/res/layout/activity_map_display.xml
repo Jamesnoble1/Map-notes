@@ -22,5 +22,25 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Date"
+        android:id="@+id/dateTextDisplay"
+        android:layout_marginBottom="88dp"
+        android:layout_above="@+id/displayTypebtn"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Time"
+        android:id="@+id/timeDisplay"
+        android:layout_marginTop="45dp"
+        android:layout_alignTop="@+id/dateTextDisplay"
+        android:layout_alignStart="@+id/displayTypebtn" />
+
 
 </RelativeLayout>

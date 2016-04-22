@@ -2,6 +2,7 @@ package com.example.james.mapnotes;
 
 /**
  * Created by James on 19/04/2016.
+ * Writes a row to remote db and to local db
  */
 
 import android.content.Context;
@@ -10,9 +11,6 @@ import android.widget.Toast;
 
 
 
-/**
- * Created by James on 19/04/2016.
- */
 public class BackgroundWriteToDB extends AsyncTask<UserMarker, Void, String> {
 
     Context context;

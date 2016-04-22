@@ -21,7 +21,6 @@ public class UserMarker {
         Snippet = snippet;
         Date = date;
         Time = time;
-
         Icon = icon;
         Latitude = lat;
         Longitude = longitude;
